@@ -188,4 +188,4 @@ jupyter notebook "FUTURE_ML_03(Resume Candidate Screening System).ipynb"
 
 ## 👤 Author
 ### Syed Nadimul Haque
-Data Science | Machine Learning Engineer | AI Engineer | Software Engineer
+Data Scientist | Machine Learning Engineer | AI Engineer | Software Engineer
