@@ -1,191 +1,142 @@
-# FUTURE_ML_03 — Resume / Candidate Screening System
-### Future Interns — Machine Learning Internship | Task 3 | 2026
+# Resume / Candidate Screening System
+
+**Future Interns — Machine Learning Internship | Task 3 | 2026**
+Syed Nadimul Haque | CIN: FIT/APR26/ML7297
 
 ---
 
-## 📌 Project Overview
-An end-to-end machine learning pipeline to automatically screen and rank 
-200 candidate resumes across 5 job roles using NLP, TF-IDF vectorization 
-and cosine similarity scoring. The system extracts skills from resumes, 
-ranks candidates based on job role fit, and identifies skill gaps for 
-each candidate — replicating how real companies automate their hiring process.
+## What this project does
+
+An NLP pipeline that automatically screens and ranks 200 candidate resumes across 5 job roles using TF-IDF vectorization and cosine similarity. For each candidate, the system extracts skills from their resume text, scores them against the target role's requirements, ranks them by fit, and flags specific skill gaps — replicating how companies automate the early stage of hiring.
+
+**Core question:** Can we replace hours of manual resume screening with a system that objectively ranks candidates by role fit and surfaces exactly which skills each person is missing?
 
 ---
 
-## 🎯 Problem Statement
-How can a machine learning pipeline be designed to automatically screen 
-hundreds of resumes, rank candidates based on job role fit, extract 
-relevant skills, and identify skill gaps — reducing manual screening 
-time and improving hiring accuracy?
+## Dataset
+
+A generated dataset of 200 realistic resumes — 40 candidates per role — each containing a candidate ID, name, target role, years of experience, education level, university, skills list, and full resume text. Skills are drawn from a pool of 100 unique skills distributed across role-specific subsets.
+
+The five roles covered:
+
+- **Data Scientist** — Python, ML, Deep Learning, TensorFlow, NLP, Statistics
+- **Web Developer** — HTML, CSS, JavaScript, React, NodeJS, MongoDB
+- **ML Engineer** — Python, MLOps, Docker, Kubernetes, PyTorch, AWS
+- **Data Analyst** — SQL, Excel, Tableau, Power BI, Python, Statistics
+- **DevOps Engineer** — Docker, Kubernetes, AWS, Linux, CI/CD, Jenkins
 
 ---
 
-## 📊 Dataset
-| Attribute | Detail |
-|---|---|
-| **Type** | Generated realistic resume dataset |
-| **Total Resumes** | 200 candidates |
-| **Job Roles** | 5 roles |
-| **Resumes per Role** | 40 candidates |
-| **Features** | Candidate ID, Name, Target Role, Years Experience, Education, University, Skills, Resume Text |
-| **Total Skills Pool** | 100 unique skills across all roles |
+## Methodology
+
+### 1. Resume generation
+
+Generated 200 resumes with realistic names, experience levels, education backgrounds, and skills. Each candidate was assigned to one of the five roles, with skills randomly drawn from that role's skill pool.
+
+### 2. Text cleaning
+
+Standard NLP preprocessing: lowercasing, removal of numbers and special characters, stopword removal (NLTK), lemmatization, and tokenization.
+
+### 3. Skill extraction
+
+Matched each resume's text against a master list of 100 skills. Counted matched and missing skills per candidate to produce a skill match percentage.
+
+### 4. TF-IDF vectorization
+
+Applied TF-IDF with bigrams (ngram_range 1–2), extracting 2,086 features from the resume corpus. Job descriptions were vectorized using the same fitted TF-IDF model to ensure consistent comparison.
+
+### 5. Candidate ranking
+
+Computed cosine similarity between each resume vector and its target job description vector. Normalised scores to a 0–100% match percentage and ranked candidates within each role.
+
+### 6. Skill gap identification
+
+For every candidate, compared their extracted skills against the required skills for their target role. Identified exactly which skills are present and which are missing, and calculated a per-candidate skill match percentage.
 
 ---
 
-## 🎯 Job Roles Covered
-| Role | Key Required Skills |
-|---|---|
-| **Data Scientist** | Python, ML, Deep Learning, TensorFlow, NLP, Statistics |
-| **Web Developer** | HTML, CSS, JavaScript, React, NodeJS, MongoDB |
-| **ML Engineer** | Python, MLOps, Docker, Kubernetes, PyTorch, AWS |
-| **Data Analyst** | SQL, Excel, Tableau, Power BI, Python, Statistics |
-| **DevOps Engineer** | Docker, Kubernetes, AWS, Linux, CI/CD, Jenkins |
+## Results
 
----
+### Top candidates per role
 
-## 🛠️ Technologies & Libraries
-| Tool | Purpose |
-|---|---|
-| **Python** | Core programming language |
-| **Jupyter Notebook** | Development environment |
-| **NLTK** | Text cleaning, tokenization, lemmatization |
-| **Scikit-learn** | TF-IDF vectorization, cosine similarity |
-| **Pandas** | Data manipulation and analysis |
-| **NumPy** | Numerical computations |
-| **Matplotlib** | Data visualisation |
-| **Seaborn** | Statistical visualisation |
-
----
-
-## ⚙️ Methodology
-
-### 1. Resume Generation
-- Generated 200 realistic resumes with names, experience, education and skills
-- 40 candidates per job role
-- Skills randomly assigned from role-specific skill pools
-
-### 2. Text Cleaning & Parsing
-- Lowercase conversion
-- Removal of numbers and special characters
-- Stopword removal using NLTK
-- Lemmatization for word normalisation
-- Tokenization
-
-### 3. Skill Extraction
-- Extracted skills from each resume text
-- Matched against master skill list of 100 unique skills
-- Counted matched and missing skills per candidate
-
-### 4. TF-IDF Vectorization
-- Applied TF-IDF with bigrams (ngram_range 1-2)
-- 2,086 features extracted from resume corpus
-- Job descriptions vectorized using same TF-IDF model
-
-### 5. Candidate Ranking
-- Computed cosine similarity between each resume and job description
-- Normalized scores to 0-100% match percentage
-- Ranked candidates within each job role
-
-### 6. Skill Gap Identification
-- Compared candidate skills vs required skills per role
-- Identified matched and missing skills for each candidate
-- Calculated skill match percentage per candidate
-
----
-
-## 🏆 Top Candidates per Role
 | Role | Best Candidate | Match % | Skill Match % |
 |---|---|---|---|
-| **Data Scientist** | Michael Kumar | 100.0% | 100.0% |
-| **Web Developer** | Carlos Martinez | 89.6% | 66.7% |
-| **ML Engineer** | Carlos Garcia | 45.6% | 53.3% |
-| **Data Analyst** | Carlos Wilson | 89.7% | 73.3% |
-| **DevOps Engineer** | John Anderson | 46.6% | 93.3% |
+| Data Scientist | Michael Kumar | 100.0% | 100.0% |
+| Web Developer | Carlos Martinez | 89.6% | 66.7% |
+| ML Engineer | Carlos Garcia | 45.6% | 53.3% |
+| Data Analyst | Carlos Wilson | 89.7% | 73.3% |
+| DevOps Engineer | John Anderson | 46.6% | 93.3% |
 
----
+### Most common skill gaps by role
 
-## 🔍 Skill Gap Analysis
-| Role | Most Missing Skill | Candidates Missing |
+| Role | Most Missing Skill | Candidates Missing It |
 |---|---|---|
-| Data Scientist | keras | 19 candidates |
-| Web Developer | mongodb, html | 14 candidates |
-| ML Engineer | mlops, model deployment | 14 candidates |
-| Data Analyst | power bi, data cleaning | 15 candidates |
-| DevOps Engineer | ansible, azure | 15 candidates |
+| Data Scientist | Keras | 19 |
+| Web Developer | MongoDB, HTML | 14 |
+| ML Engineer | MLOps, Model Deployment | 14 |
+| Data Analyst | Power BI, Data Cleaning | 15 |
+| DevOps Engineer | Ansible, Azure | 15 |
 
 ---
 
-## 📈 Key Findings
-- ✅ **Best Role Match:** Data Scientist — 64.2% average match
-- ✅ **Best Education:** Diploma holders — 74.4% skill match
-- ✅ **Perfect Candidate:** Michael Kumar — 100% match (Data Scientist)
-- ✅ **Most Common Gap:** keras missing in 19 Data Scientists
-- ✅ **System screens 200 resumes instantly** vs hours of manual work
-- ✅ **Skill gap identified** for all 200 candidates automatically
-- ✅ **TF-IDF + Cosine Similarity** proven effective for resume ranking
+## Key findings
+
+1. Data Scientist had the highest average match at 64.2% across all candidates for that role.
+2. Diploma holders scored the highest average skill match at 74.4% — an unexpected result worth investigating further.
+3. One perfect candidate: Michael Kumar matched 100% on both TF-IDF similarity and skill coverage for Data Scientist.
+4. The most common gap was Keras, missing from 19 out of 40 Data Scientist resumes.
+5. The system screens all 200 resumes instantly — what would take hours manually is done in seconds.
+6. Skill gaps were identified automatically for every single candidate.
+7. TF-IDF combined with cosine similarity is effective for resume ranking without needing deep learning.
 
 ---
 
-## 📊 Visualisations Generated
-| File | Description |
-|---|---|
-| `eda_overview.png` | Avg match % by role, skill distribution, experience |
-| `eda_analysis.png` | Education analysis, experience scatter, missing skills |
-| `top_candidates.png` | Top 5 candidates per role, role vs education heatmap |
+## Business impact
+
+Without this system, you're spending hours manually reading resumes with no consistent scoring and no visibility into skill gaps. With it, all five roles are ranked simultaneously, scoring is objective and skill-based, and every candidate gets a clear gap report — instantly.
 
 ---
 
-## 📂 Project Structure
+## Visualisations
 
-FUTURE_ML_03/
-│
-├── FUTURE_ML_03(Resume Candidate Screening System).ipynb
-├── resume_dataset.csv
-├── eda_overview.png
-├── eda_analysis.png
-├── top_candidates.png
-└── README.md
+The notebook generates three saved charts:
+
+- `eda_overview.png` — average match percentage by role, skill distribution, experience breakdown
+- `eda_analysis.png` — education analysis, experience vs match scatter, missing skills breakdown
+- `top_candidates.png` — top 5 candidates per role, role vs education heatmap
 
 ---
 
-## 🚀 How to Run
+## How to run
+
 ```bash
-# Clone the repository
 git clone https://github.com/SyedNadim123/FUTURE_ML_03.git
 
-# Install dependencies
 pip install pandas numpy scikit-learn nltk matplotlib seaborn
 
-# Download NLTK data
 python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet')"
 
-# Launch Jupyter Notebook
 jupyter notebook "FUTURE_ML_03(Resume Candidate Screening System).ipynb"
 ```
 
----
-
-## 💼 Business Impact
-| Before System | After System |
-|---|---|
-| Hours of manual screening | Instant automated ranking |
-| Human bias in selection | Objective skill-based scoring |
-| No skill gap visibility | Clear skill gap report per candidate |
-| One role at a time | All 5 roles ranked simultaneously |
+Make sure `resume_dataset.csv` is in the same folder as the notebook.
 
 ---
 
-## 📚 Internship Details
-| Field | Detail |
-|---|---|
-| **Organization** | Future Interns |
-| **Program** | Machine Learning Internship|
-| **CIN** | FIT/APR26/ML7297 |
-| **GitHub Repo** | FUTURE_ML_03 |
-| **Internship Period** | 24/04/2026 – 24/05/2026 |
+## Tech stack
+
+**Language:** Python
+**NLP:** NLTK (tokenization, lemmatization, stopwords)
+**ML:** scikit-learn (TF-IDF vectorization, cosine similarity)
+**Data processing:** pandas, NumPy
+**Visualisation:** matplotlib, seaborn
 
 ---
 
-## 👤 Author
-### Syed Nadimul Haque
-Data Scientist | Machine Learning Engineer | AI Engineer | Software Engineer
+## Internship context
+
+Completed as Task 3 of the Future Interns Machine Learning Internship programme (24 April – 24 May 2026).
+
+---
+
+**Author:** Syed Nadimul Haque — Data Scientist | ML Engineer
